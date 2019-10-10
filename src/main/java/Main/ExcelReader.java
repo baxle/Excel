@@ -8,8 +8,8 @@ import java.util.List;
 
 public class ExcelReader {
 
-    public static final String EXCEL_FILE_PATH = "test.xls";
-    private static String cellText = "лист3";
+    public static final String EXCEL_FILE_PATH = "test1.xls";
+    private static String cellText = "Евро";
     private static int textCount;
 
 
@@ -24,9 +24,12 @@ public class ExcelReader {
         workbook.forEach(sheet -> {
             sheet.forEach(row -> {
                 row.forEach(cell -> {
-                    if (cell.getStringCellValue().equals(cellText)) {
-                        System.out.printf("Текст %s найден в листе %s в ячейке %s.\n", cellText, cell.getSheet().getSheetName(), cell.getAddress());
-                        textCount++;
+                    if(cell.getCellTypeEnum() == CellType.STRING) {
+                        if (cell.getStringCellValue().contains(cellText)) {
+                            // для полного совпадения //if (cell.getStringCellValue().equals(cellText)) {
+                            System.out.printf("Текст %s найден в листе %s в ячейке %s.\n", cellText, cell.getSheet().getSheetName(), cell.getAddress());
+                            textCount++;
+                        }
                     }
                 });
             });
