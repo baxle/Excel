@@ -4,13 +4,14 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import org.apache.log4j.Logger;
 
 public class ExcelReader {
 
     public static final String EXCEL_FILE_PATH = "test1.xls";
-    private static String cellText = "Евро";
+    private static String cellText = "Евро666";
     private static int textCount;
+    final static Logger logger = Logger.getLogger(ExcelReader.class);
 
 
 
@@ -36,6 +37,7 @@ public class ExcelReader {
         });
         if (textCount == 0) {
             System.err.printf("Текст %s не найден.", cellText);
+            logger.error("Это сообщение ошибки");
         }
 
 
