@@ -11,9 +11,9 @@ public class ExcelReader {
 
     private static Workbook workbook;
     private static final String EXCEL_FILE_PATH = "test1.xls";
-    private static String cellText = "Евро";
+    private static String cellText = "Евро222";
     private static int textCount;
-    final static Logger logger = Logger.getLogger(ExcelReader.class);
+    private final static Logger logger = Logger.getLogger(ExcelReader.class);
 
 
 
@@ -49,8 +49,8 @@ public class ExcelReader {
             });
         });
         if (textCount == 0) {
-            System.err.printf("Текст %s не найден.", cellText);
-            logger.error("Это сообщение ошибки");
+            System.err.printf("Текст %s не найден.\n", cellText);
+            logger.error("Искомого текста "+ cellText + " в файле не найдено.");
         }
 
 
