@@ -3,21 +3,34 @@ package Main;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.apache.log4j.Logger;
 
 public class ExcelReader {
 
-    public static final String EXCEL_FILE_PATH = "test1.xls";
-    private static String cellText = "Евро666";
+    private static Workbook workbook;
+    private static final String EXCEL_FILE_PATH = "test1.xls";
+    private static String cellText = "Евро";
     private static int textCount;
     final static Logger logger = Logger.getLogger(ExcelReader.class);
 
 
 
-    public static void main(String[] args) throws IOException, InvalidFormatException {
+    public static void main(String[] args)  {
 
-        Workbook workbook = WorkbookFactory.create(new File(EXCEL_FILE_PATH));
+        try {
+            workbook = WorkbookFactory.create(new File(EXCEL_FILE_PATH));
+        } catch (FileNotFoundException e){
+            System.err.printf("Файла %s не существует.", EXCEL_FILE_PATH);
+            logger.error("Заданного в EXCEL_FILE_PATH файла не существует.");
+            System.exit(0);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+        }
 
         /**
          * Поиск текста {@link #cellText} по всем ячейкам файла {@link #EXCEL_FILE_PATH}
