@@ -1,5 +1,6 @@
 package Interface;
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 
@@ -14,6 +15,7 @@ public class ExcelReader implements CanDo {
     private Workbook workbook;
     private int textCount;
     private final Logger logger = Logger.getLogger(ExcelReader.class);
+    private int listCount;
 
 
     /**
@@ -60,4 +62,33 @@ public class ExcelReader implements CanDo {
             logger.error("Искомого текста " + text + " в файле не найдено.");
         }
     }
+
+    @Override
+    public void insertImage(String fileName, String imageName, String sheetName, String cell) {
+
+        try {
+            workbook = WorkbookFactory.create(new File(fileName));
+        } catch (FileNotFoundException e) {
+            System.err.printf("Файла %s не существует.\n", fileName);
+            logger.error("Заданного файла " + fileName + " не существует.");
+            System.exit(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.error("Ошибка.");
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+            logger.error("Ошибка InvalidFormatException.");
+        }
+
+        workbook.forEach(sheet -> {
+            if (sheet.getSheetName().equals(sheetName)){
+                listCount++;
+            }
+        });
+        if(listCount==0){
+
+        }
+    }
+
+
 }
