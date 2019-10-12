@@ -63,7 +63,7 @@ public class ExcelReader implements CanDo {
         });
         if (textCount == 0) {
             System.err.printf("Текст %s не найден.\n", text);
-            logger.error("Искомого текста " + text + " в файле не найдено.");
+            logger.info("Искомого текста " + text + " в файле не найдено.");
         }
         try {
             workbook.close();
@@ -87,9 +87,10 @@ public class ExcelReader implements CanDo {
         System.out.println(listCount);
         if (listCount == 0) {
             System.err.printf("Листа %s не найдено. Создаем новый лист\n", sheetName);
+            logger.info("Листа " + sheetName + " в файле не найдено. Создаем такой лист.");
 
 
-            String safeName = WorkbookUtil.createSafeSheetName(sheetName); // returns " O'Brien's sales   "
+            String safeName = WorkbookUtil.createSafeSheetName(sheetName);
             Sheet sheet3 = workbook.createSheet(safeName);
             try (OutputStream fileOut = new FileOutputStream(fileName)) {
                 workbook.write(fileOut);
