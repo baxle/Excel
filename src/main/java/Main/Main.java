@@ -17,7 +17,7 @@ public class Main {
         CanDo excelReader = new ExcelReader();
 
         excelReader.findText(fileName, cellText, equalsOrContains);
-        excelReader.findText(fileName, "Дзю", true);
+        excelReader.findText(fileName, "Дзю", false);
         excelReader.insertImage(fileName, imageName, sheetName, cellName);
     }
 }

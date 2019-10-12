@@ -61,6 +61,9 @@ public class ExcelReader implements CanDo {
                 });
             });
         });
+        if (textCount!=0){
+            logger.info("Искомый текст " + text + " встречается в файле "+ textCount+ " раз(а).");
+        }
         if (textCount == 0) {
             System.err.printf("Текст %s не найден.\n", text);
             logger.info("Искомого текста " + text + " в файле не найдено.");
