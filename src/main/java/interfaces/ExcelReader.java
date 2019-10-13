@@ -35,12 +35,11 @@ public class ExcelReader implements CanDo {
     /**
      * Функция поиска текста в эксель файле.
      *
-     * @param fileName         - имя эксель файла.
      * @param text             - текст, который ищем в файле.
      * @param equalsOrContains - true - полное совпадение @param text c текстом в ячейке, false - частичное.
      */
     @Override
-    public void findText(String fileName, String text, boolean equalsOrContains) {
+    public void findText(String text, boolean equalsOrContains) {
         textCount = 0;
 
         workbook.forEach(sheet -> {
@@ -105,5 +104,5 @@ public class ExcelReader implements CanDo {
             e.printStackTrace();
         }
     }
-    
+
 }
