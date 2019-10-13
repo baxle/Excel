@@ -19,8 +19,10 @@ public class ExcelReader implements CanDo {
         URL resource = classLoader.getResource(fileName);
 
         if (resource == null) {
+            logger.error("Заданного файла " + fileName + " не существует.");
             throw new IllegalArgumentException("Заданного файла " + fileName + " не существует.");
-        } else {
+        }
+        else {
             try {
                 workbook = WorkbookFactory.create(new File(resource.getFile()));
             } catch (FileNotFoundException e) {
@@ -35,6 +37,7 @@ public class ExcelReader implements CanDo {
                 logger.error("Ошибка InvalidFormatException.");
             }
         }
+
     }
 
 
