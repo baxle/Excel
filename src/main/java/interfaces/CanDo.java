@@ -1,4 +1,4 @@
-package Interface;
+package interfaces;
 
 public interface CanDo {
     void findText(String fileName, String text, boolean equalsOrContains);

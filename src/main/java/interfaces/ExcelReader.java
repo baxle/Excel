@@ -1,6 +1,5 @@
-package Interface;
+package interfaces;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 
@@ -16,8 +15,7 @@ public class ExcelReader implements CanDo {
     private final Logger logger = Logger.getLogger(ExcelReader.class);
     private int listCount;
 
-
-    private void openFile(String fileName) {
+    public ExcelReader(String fileName) {
         try {
             workbook = WorkbookFactory.create(new File(fileName));
         } catch (FileNotFoundException e) {
@@ -33,6 +31,7 @@ public class ExcelReader implements CanDo {
         }
     }
 
+
     /**
      * Функция поиска текста в эксель файле.
      *
@@ -43,7 +42,6 @@ public class ExcelReader implements CanDo {
     @Override
     public void findText(String fileName, String text, boolean equalsOrContains) {
         textCount = 0;
-        openFile(fileName);
 
         workbook.forEach(sheet -> {
             sheet.forEach(row -> {
@@ -52,8 +50,7 @@ public class ExcelReader implements CanDo {
                         if (cell.getStringCellValue().contains(text) && !equalsOrContains) {
                             System.out.printf("Текст %s найден в листе %s в ячейке %s.\n", text, cell.getSheet().getSheetName(), cell.getAddress());
                             textCount++;
-                        }
-                        if (cell.getStringCellValue().equals(text) && equalsOrContains) {
+                        } else if (cell.getStringCellValue().equals(text) && equalsOrContains) {
                             System.out.printf("Текст %s найден в листе %s в ячейке %s.\n", text, cell.getSheet().getSheetName(), cell.getAddress());
                             textCount++;
                         }
@@ -61,10 +58,10 @@ public class ExcelReader implements CanDo {
                 });
             });
         });
-        if (textCount!=0){
-            logger.info("Искомый текст " + text + " встречается в файле "+ textCount+ " раз(а).");
-        }
-        if (textCount == 0) {
+
+        if (textCount != 0) {
+            logger.info("Искомый текст " + text + " встречается в файле " + textCount + " раз(а).");
+        } else if (textCount == 0) {
             System.err.printf("Текст %s не найден.\n", text);
             logger.info("Искомого текста " + text + " в файле не найдено.");
         }
@@ -77,8 +74,7 @@ public class ExcelReader implements CanDo {
 
     @Override
     public void insertImage(String fileName, String imageName, String sheetName, String cell) {
-
-        openFile(fileName);
+        listCount = 0;
 
         workbook.forEach(sheet -> {
             if (sheet.getSheetName().equals(sheetName)) {
@@ -94,7 +90,7 @@ public class ExcelReader implements CanDo {
 
 
             String safeName = WorkbookUtil.createSafeSheetName(sheetName);
-            Sheet sheet3 = workbook.createSheet(safeName);
+            workbook.createSheet(safeName);
             try (OutputStream fileOut = new FileOutputStream(fileName)) {
                 workbook.write(fileOut);
             } catch (IOException e) {
@@ -109,6 +105,5 @@ public class ExcelReader implements CanDo {
             e.printStackTrace();
         }
     }
-
-
+    
 }

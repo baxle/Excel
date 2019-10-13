@@ -1,7 +1,7 @@
-package Main;
+package main;
 
-import Interface.CanDo;
-import Interface.ExcelReader;
+import interfaces.CanDo;
+import interfaces.ExcelReader;
 
 public class Main {
 
@@ -14,10 +14,11 @@ public class Main {
 
 
     public static void main(String[] args) {
-        CanDo excelReader = new ExcelReader();
+        CanDo excelReader = new ExcelReader(fileName);
 
         excelReader.findText(fileName, cellText, equalsOrContains);
         excelReader.findText(fileName, "Дзю", false);
-        excelReader.insertImage(fileName, imageName, sheetName, cellName);
+        // excelReader.insertImage(fileName, imageName, sheetName, cellName);
+
     }
 }
