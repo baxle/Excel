@@ -1,10 +1,8 @@
 package interfaces;
-
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
-
 import java.io.*;
-
+import java.net.URL;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.util.WorkbookUtil;
 
@@ -16,18 +14,26 @@ public class ExcelReader implements CanDo {
     private int listCount;
 
     public ExcelReader(String fileName) {
-        try {
-            workbook = WorkbookFactory.create(new File(fileName));
-        } catch (FileNotFoundException e) {
-            System.err.printf("Файла %s не существует.\n", fileName);
-            logger.error("Заданного файла " + fileName + " не существует.");
-            System.exit(0);
-        } catch (IOException e) {
-            e.printStackTrace();
-            logger.error("Ошибка.");
-        } catch (InvalidFormatException e) {
-            e.printStackTrace();
-            logger.error("Ошибка InvalidFormatException.");
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource(fileName);
+
+        if (resource == null) {
+            throw new IllegalArgumentException("Заданного файла " + fileName + " не существует.");
+        } else {
+            try {
+                workbook = WorkbookFactory.create(new File(resource.getFile()));
+            } catch (FileNotFoundException e) {
+                System.err.printf("Файла %s не существует.\n", fileName);
+                logger.error("Заданного файла " + fileName + " не существует.");
+                System.exit(0);
+            } catch (IOException e) {
+                e.printStackTrace();
+                logger.error("Ошибка.");
+            } catch (InvalidFormatException e) {
+                e.printStackTrace();
+                logger.error("Ошибка InvalidFormatException.");
+            }
         }
     }
 
